@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<link href="https://fonts.googleapis.com/css?family=Roboto:300,400" rel="stylesheet">
+	<style>
+	body {
+		background-color: #F7F7F7;
+	}
+	</style>
+    <script src="https://d3js.org/d3.v4.min.js"></script>
+	<script src="http://colorbrewer2.org/export/colorbrewer.js"></script>
+</head>
+<body>
+    <div id="viz"></div>
+    <script type="text/javascript">
+
+    var data = [
+        {name: "Shanghai", value: 24256800, group: "Asia"},
+        {name: "Beijing", value: 21516000, group: "Asia"},
+        {name: "Delhi", value: 16787941, group: "Asia"},
+        {name: "Karachi", value: 16126000, group: "Asia"},
+        {name: "Tianjin", value: 15200000, group: "Asia"},
+        {name: "Istanbul", value: 14160467, group: "Europe"},
+        {name: "Tokyo", value: 13513734, group: "Asia"},
+        {name: "Guangzhou", value: 13080500, group: "Asia"},
+        {name: "Lagos", value: 12614000, group: "Africa"},
+        {name: "Mumbai", value: 12442373, group: "Asia"},
+        {name: "Moscow", value: 12380664, group: "Asia"},
+        {name: "São Paulo", value: 12038175, group: "South America"},
+        {name: "Shenzhen", value: 10467400, group: "Asia"},
+        {name: "Jakarta", value: 10075310, group: "Asia"},
+        {name: "Lahore", value: 10052000, group: "Asia"},
+        {name: "Seoul", value: 9995784, group: "Asia"},
+        {name: "Wuhan", value: 9785392, group: "Asia"},
+        {name: "Kinshasa", value: 9735000, group: "Africa"},
+        {name: "Cairo", value: 9278441, group: "Africa"},
+        {name: "Dhaka", value: 8906039, group: "Asia"},
+        {name: "Mexico City", value: 8874724, group: "North America"},
+        {name: "Lima", value: 8693387, group: "South America"},
+        {name: "London", value: 8673713, group: "Europe"},
+        {name: "New York City", value: 8550405, group: "North America"},
+        {name: "Bengaluru", value: 8443675, group: "Asia"},
+        {name: "Bangkok", value: 8280925, group: "Asia"},
+        {name: "Ho Chi Minh City", value: 8224400, group: "Asia"},
+        {name: "Dongguan", value: 8220207, group: "Asia"},
+        {name: "Chongqing", value: 8189800, group: "Asia"},
+        {name: "Nanjing", value: 8187828, group: "Asia"},
+        {name: "Tehran", value: 8154051, group: "Asia"},
+        {name: "Shenyang", value: 8106171, group: "Asia"},
+        {name: "Bogotá", value: 7776845, group: "South America"},
+        {name: "Ningbo", value: 7605689, group: "Asia"},
+        {name: "Hong Kong", value: 7298600, group: "Asia"},
+        {name: "Hanoi", value: 7232700, group: "Asia"},
+        {name: "Baghdad", value: 7180889, group: "Asia"},
+        {name: "Changsha", value: 7044118, group: "Asia"},
+        {name: "Hyderabad", value: 6731790, group: "Asia"},
+        {name: "Chennai", value: 6727000, group: "Asia"},
+        {name: "Rio de Janeiro", value: 6498837, group: "South America"},
+        {name: "Faisalabad", value: 6418745, group: "Asia"},
+        {name: "Foshan", value: 6151622, group: "Asia"},
+        {name: "Zunyi", value: 6127009, group: "Asia"},
+        {name: "Santiago", value: 5743719, group: "South America"},
+        {name: "Riyadh", value: 5676621, group: "Asia"},
+        {name: "Ahmedabad", value: 5570585, group: "Asia"},
+        {name: "Singapore", value: 5535000, group: "Asia"},
+        {name: "Shantou", value: 5391028, group: "Asia"},
+        {name: "Saint Petersburg", value: 5281579, group: "Asia"},
+        {name: "Yangon", value: 5214000, group: "Asia"},
+        {name: "Abidjan", value: 4765000, group: "Africa"},
+        {name: "Chengdu", value: 4741929, group: "Asia"},
+        {name: "Alexandria", value: 4616625, group: "Africa"},
+        {name: "Kolkata", value: 4496694, group: "Asia"},
+        {name: "Ankara", value: 4470800, group: "Europe"},
+        {name: "Xi'an", value: 8705600, group: "Asia"},
+        {name: "Surat", value: 4462002, group: "Asia"},
+        {name: "Johannesburg", value: 4434827, group: "Africa"},
+        {name: "Dar es Salaam", value: 4364541, group: "Africa"},
+        {name: "Suzhou", value: 4327066, group: "Asia"},
+        {name: "Harbin", value: 4280701, group: "Asia"},
+        {name: "Giza", value: 4239988, group: "Africa"},
+        {name: "Zhengzhou", value: 4122087, group: "Asia"},
+        {name: "New Taipei City", value: 3954929, group: "Asia"},
+        {name: "Los Angeles", value: 3884307, group: "North America"},
+        {name: "Cape Town", value: 3740026, group: "Africa"},
+        {name: "Yokohama", value: 3726167, group: "Asia"},
+        {name: "Berlin", value: 3671000, group: "Europe"},
+        {name: "Busan", value: 3590101, group: "Asia"},
+        {name: "Hangzhou", value: 3560391, group: "Asia"},
+        {name: "Xiamen", value: 3531347, group: "Asia"},
+        {name: "Quanzhou", value: 3520846, group: "Asia"},
+        {name: "Rawalpindi", value: 3510000, group: "Asia"},
+        {name: "Jeddah", value: 3456259, group: "Asia"},
+        {name: "Durban", value: 3442361, group: "Africa"},
+        {name: "Hyderabad", value: 3429471, group: "Asia"},
+        {name: "Kabul", value: 3414100, group: "Asia"},
+        {name: "Casablanca", value: 3359818, group: "Africa"},
+        {name: "Hefei", value: 3352076, group: "Asia"},
+        {name: "Pyongyang", value: 3255388, group: "Asia"},
+        {name: "Madrid", value: 3207247, group: "Europe"},
+        {name: "Peshawar", value: 3201000, group: "Asia"},
+        {name: "Ekurhuleni", value: 3178470, group: "Africa"},
+        {name: "Nairobi", value: 3138369, group: "Africa"},
+        {name: "Zhongshan", value: 3121275, group: "Asia"},
+        {name: "Pune", value: 3115431, group: "Asia"},
+        {name: "Addis Ababa", value: 3103673, group: "Africa"},
+        {name: "Jaipur", value: 3073350, group: "Asia"},
+        {name: "Buenos Aires", value: 3054300, group: "South America"},
+        {name: "Wenzhou", value: 3039439, group: "Asia"}
+    ]; 
+	data.sort(function(a, b) {
+		return a.value - b.value; });
+		
+//	let groupings = d3.nest()
+//		.key ( function(d) { return d.group; } )
+//		.rollup ( function(d) { return 1; } )
+//		.entries(data);
+//	console.log(groupings);
+	
+	var groupColours = [
+        {group: "Africa", colour: "#22A241"},
+        {group: "Asia", colour: "#FFBE02"},
+        {group: "Europe", colour: "#0885CD"},
+        {group: "North America", colour: "#574AAC"},
+        {group: "South America", colour: "#49BFBA"}
+	];
+	
+    var viewX = 600;
+    var viewY = 800;
+	var centreRadius = 150;
+	var barAngle = 330 / (data.length - 1);
+    var barWidth = 7;    
+	var labelSize = 10;
+	var legendSize = 12;
+		
+    var svg = d3.select("body").append("svg") 
+		.attr("height", (d, i)=> { return viewY; } )
+		.attr("width", function(d, i) { return viewX; } )
+		.attr("style", function(d, i) { 
+			return "stroke-width: 0px; background-color: #FFFFFF;"; } );
+        		
+	var tmpLabels = svg.selectAll('text')
+		.data(data).enter().append("text")
+		.attr("font-family", "Roboto,RobotoDraft,Helvetica,Arial,sans-serif")
+		.attr("font-size", function(d, i) { return labelSize + "px"; } )
+		.text( function (d) { return d.name; })
+		.each( function(d, i) {
+			d.textWidth = this.getComputedTextLength();
+			//this.remove() // remove after displaying them
+		});
+	tmpLabels.remove();
+	//console.log(data);
+
+	var tmpLabels = svg.selectAll('text')
+		.data(groupColours).enter().append("text")
+		.attr("font-family", "Roboto,RobotoDraft,Helvetica,Arial,sans-serif")
+		.attr("font-size", function(d, i) { return legendSize + "px"; } )
+		.text( function (d) { return d.group; })
+		.each( function(d, i) {
+			d.textWidth = this.getComputedTextLength();
+			//this.remove() // remove after displaying them
+		});
+	tmpLabels.remove();
+	console.log(groupColours);
+	
+	var legendX = d3.max(groupColours, function(d, i) { 
+	return (d.textWidth + legendSize + 5); });
+	
+	function angleDegrees (i) {
+		return -(i * barAngle) - 90; }
+	
+	function angleRadians (i) {
+		return angleDegrees(i) * (Math.PI / 180); }
+	
+	var boundaryXMaxFixed = d3.max(data, function(d, i) { 
+		return ((centreRadius + 5 + d.textWidth) * Math.cos(angleRadians(i))); });
+	var boundaryXMinFixed = d3.min(data, function(d, i) { 
+		return ((centreRadius + 5 + d.textWidth) * Math.cos(angleRadians(i))); });
+	console.log(boundaryXMaxFixed);
+	console.log(boundaryXMinFixed);
+	var boundaryYMaxFixed = d3.max(data, function(d, i) { 
+		return ((centreRadius + 5 + d.textWidth) * Math.sin(angleRadians(i))); })
+	var boundaryYMinFixed = d3.min(data, function(d, i) { 
+		return ((centreRadius + 5 + d.textWidth) * Math.sin(angleRadians(i))); });
+	var boundaryXMaxVariable = d3.max(data, function(d, i) { 
+		return (d.value * Math.cos(angleRadians(i))); })
+	var boundaryXMinVariable = d3.min(data, function(d, i) { 
+		return (d.value * Math.cos(angleRadians(i))); });
+	var boundaryYMaxVariable = d3.max(data, function(d, i) { 
+		return (d.value * Math.sin(angleRadians(i))); })
+	var boundaryYMinVariable = d3.min(data, function(d, i) { 
+		return (d.value * Math.sin(angleRadians(i))); });
+	console.log(boundaryYMinVariable);
+	var barFactor = Math.min(
+		(viewX - (boundaryXMaxFixed - boundaryXMinFixed)) / 
+		(boundaryXMaxVariable - boundaryXMinVariable),
+		(viewY - (boundaryYMaxFixed - boundaryYMinFixed)) / 
+		(boundaryYMaxVariable - boundaryYMinVariable) );
+	// 300 / d3.max(data, (d)=> d.value)
+	var centreX = -(boundaryXMinFixed + boundaryXMinVariable * barFactor);
+	var centreY = -(boundaryYMinFixed + boundaryYMinVariable * barFactor);
+	
+    var bars = svg.selectAll(".bars")
+        .data(data).enter().append("rect")
+		.attr('class', 'bars')
+        .attr("x", function(d, i) { return centreX + centreRadius; } )
+        .attr("y", function(d, i) { return centreY - (barWidth / 2); } )
+        .attr("width", function(d, i) { return d.value * barFactor; } )
+        .attr("height", function(d, i) { return barWidth; } )
+		.attr("fill",function(d) {
+			//return "hsl(" + Math.random() * 360 + ",100%,50%)"; } )
+			//console.log(groupColours[groupColours.findIndex(i => i.group === d.group)].colour);
+			//return colour(groupings.findIndex(i => i.key === d.group)) } )
+			return groupColours[groupColours.findIndex(i => i.group === d.group)].colour } )
+		.attr("transform", function(d, i) { 
+			return "rotate(" + (-(i * barAngle) - 90) + ", " + centreX + ", " + centreY + ")"; } );
+	//bars.exit().remove();
+
+	var axisMarkData = [
+        {value: 5000000},
+        {value: 10000000},
+        {value: 15000000},
+        {value: 20000000}
+	];
+	
+	var axisMarks = svg.selectAll(".axisMarks")
+		.data(axisMarkData).enter().append("circle")
+		.attr('class', 'axisMarks')
+        .attr("cx", function(d, i) { return centreX; } )
+        .attr("cy", function(d, i) { return centreY; } )
+        .attr("r", function(d, i) { return d.value * barFactor + centreRadius; } )
+		.attr("stroke", "#FFFFFF")
+		.attr("fill", "none")
+		.attr("stroke-width", 2);
+	//bars.exit().remove();
+
+	var axisText = svg.selectAll(".axisText")
+		.data(axisMarkData).enter().append("text")
+		.attr('class', 'axisText')
+        .attr("x", function(d, i) { return centreX -10 + Math.cos((-330-90) * (Math.PI / 180)) * (centreRadius + d.value * barFactor); } )
+        .attr("y", function(d, i) { return centreY +0 + Math.sin((-330-90) * (Math.PI / 180)) * (centreRadius + d.value * barFactor); } )
+		.text( function (d) { return (d.value / 1000000).toFixed(1) + 'M'; })
+		.attr("text-anchor", "end")
+		.attr("alignment-baseline", "baseline")
+        .attr("font-family", "sans-serif")
+		.attr("font-size", function(d, i) { return labelSize + "px"; } )
+		.attr("fill", "#000000" )
+	//bars.exit().remove();
+	
+    var labels = svg.selectAll("text")
+        .data(data).enter().append("text")
+        .attr("x", function(d, i) {  
+			//if((i * barAngle) >= 180) 
+				return centreX + centreRadius + (d.value * barFactor) + 5; 
+			//else  
+			//	return centreX - centreRadius - (d.value * barFactor) - 5; 
+			} )
+        .attr("y", function(d, i) { return centreY + (labelSize / 2) - 2; } )
+		.attr("font-family", "sans-serif")
+		.attr("font-size", function(d, i) { return labelSize + "px"; } )
+		.attr("fill", "#000000" )
+		.attr("text-anchor", function(d, i) {  
+			//if((i * barAngle) >= 180) 
+			//	return "start"; 
+			//else  
+				//return "end"; 
+				} )
+		.text( function (d) { return d.name; })
+		.attr("transform", function(d, i) { 
+			//if((i * barAngle) >= 180) 
+				console.log((-(i * barAngle) - 90));
+				return "rotate(" + (-(i * barAngle) - 90) + ", " + centreX + ", " + centreY + ")"; 
+			//else 
+				//return "rotate(" + (-(i * barAngle) - 90 - 180) + ", " + centreX + ", " + centreY + ")"; 
+				} );
+	//labels.exit().remove();	
+	
+    var legendDots = svg.selectAll(".legendDots")
+        .data(groupColours).enter().append("circle")
+		.attr('class', 'legendDots')
+        .attr("cx", function(d, i) { return centreX - (legendX / 2) + (legendSize / 2); } )
+        .attr("cy", function(d, i) { return centreY + i * (legendSize + 8); } )
+        .attr("r", function(d, i) { return legendSize / 2; } )
+		.attr("fill",function(d) {
+			return d.colour } );
+	//bars.exit().remove();
+
+    var legendText = svg.selectAll(".legendText")
+        .data(groupColours).enter().append("text")
+		.attr('class', 'legendText')
+		.attr("font-family", "Roboto,RobotoDraft,Helvetica,Arial,sans-serif")
+		.attr("font-size", function(d, i) { return legendSize + "px"; } )
+		.attr("fill", "#000000" )
+		.text( function (d) { return d.group; })
+		.attr("x", function(d, i) { return centreX - (legendX / 2) + legendSize + 5; } )
+        .attr("y", function(d, i) { return centreY + i * (legendSize + 8) + (legendSize / 2) - 1; } );
+	//bars.exit().remove();
+	
+	svg.append("text")
+		.attr("class", "chartTitle")
+		.attr('class', 'legendText')
+		.attr("font-family", "Roboto,RobotoDraft,Helvetica,Arial,sans-serif")
+		.attr("font-size", function(d, i) { return "25px"; } )	
+		.text("City Populations")
+		.attr("fill", "#333333" )
+		.attr("text-anchor", "middle")
+		.attr("x", function(d, i) { return centreX; } )
+        .attr("y", function(d, i) { return centreY - 55; } );
+
+	svg.append("text")
+		.attr("class", "chartTitle")
+		.attr('class', 'legendText')
+		.attr("font-family", "Roboto,RobotoDraft,Helvetica,Arial,sans-serif")
+		.attr("font-size", function(d, i) { return "12px"; } )	
+		.text("Populations > 3 million")
+		.attr("fill", "#888888" )
+		.attr("text-anchor", "middle")
+		.attr("x", function(d, i) { return centreX; } )
+        .attr("y", function(d, i) { return centreY - 32; } );		
+
+	svg.append("text")
+		.attr("class", "chartTitle")
+		.attr('class', 'legendText')
+		.attr("font-family", "Roboto,RobotoDraft,Helvetica,Arial,sans-serif")
+		.attr("font-size", function(d, i) { return "25px"; } )	
+		.text("City Populations")
+		.attr("fill", "#333333" )
+		.attr("text-anchor", "start")
+		.attr("x", function(d, i) { return 50; } )
+        .attr("y", function(d, i) { return 65; } );
+
+	svg.append("text")
+		.attr("class", "chartTitle")
+		.attr('class', 'legendText')
+		.attr("font-family", "Roboto,RobotoDraft,Helvetica,Arial,sans-serif")
+		.attr("font-size", function(d, i) { return "10px"; } )	
+		.text("https://en.wikipedia.org/wiki/List_of_cities_proper_by_population")
+		//<tspan x="0" dy=".6em">tspan line 1</tspan>
+        //<tspan x="0" dy="1.2em">tspan line 2</tspan>
+        //<tspan x="0" dy="1.2em">tspan line 3</tspan>
+		.attr("fill", "#888888" )
+		.attr("text-anchor", "start")
+		.attr("x", function(d, i) { return 50; } )
+        .attr("y", function(d, i) { return 88; } );	
+		
+		</script>
+
+</body>
+</html>
